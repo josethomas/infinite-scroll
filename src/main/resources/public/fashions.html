@@ -15,34 +15,54 @@
 <div id="content" class="content">
 </div>
 </div> 
- 
+
 <script>
 var currentOffset = 0;
 var limit = 20;
+var lastScrollFireTime, scrollTimer = 0;
 function updateItemDisplay() {
-  var apiUrl = "/item?offset="+currentOffset+"&limit="+limit;
-  $.getJSON(apiUrl, function(apiResponse) {
-    var items = [];
-    $.each( apiResponse, function() {
-      var blurb = this.blurb;
-      if (blurb != null) {
-        var wordCount = blurb.split(' ').length; // TODO handle leading, trailing, multispace
-        if (wordCount > 32) {
-        	items.push('<div class="span3"><div class="item"><div class="img"><img src="http://40.media.tumblr.com/6a70ba366ee157278515ad5f20284b1d/tumblr_ml6o2uXHzL1s4mpljo1_1280.jpg"></div><div class="caption"><h4>'+
-		    		this.title+'</h4><p>'+this.blurb+'</p></div></div></div>');
-        } else {
-          items.push('<div class="span3"><div class="item"><div class="img"><img src="http://40.media.tumblr.com/6a70ba366ee157278515ad5f20284b1d/tumblr_ml6o2uXHzL1s4mpljo1_1280.jpg"></div><div class="caption"><h4>'+
-			    		this.title+'</h4><p>'+this.blurb+'</p></div></div></div>');
-        }
+  var minScrollTime = 500;
+  var now = new Date().getTime();
+  
+  if (!scrollTimer) {
+      if (now - lastScrollFireTime > (3 * minScrollTime)) {
+  		fetchAndUpdate();
+ 		lastScrollFireTime = now;
       }
+      scrollTimer = setTimeout(function() {
+          scrollTimer = null;
+          lastScrollFireTime = new Date().getTime();
+          fetchAndUpdate();
+      }, minScrollTime);
+  }
+}
 
-	});
-	 
-	var d = items.join("");
-	//alert(d);
-	$('.content').append(d);
-	currentOffset = currentOffset + items.length;
-  });
+function fetchAndUpdate() {
+	  var apiUrl = "/item?offset="+currentOffset+"&limit="+limit;
+	  console.log(apiUrl);
+	  
+	  $.getJSON(apiUrl, function(apiResponse) {
+	    var items = [];
+	    $.each( apiResponse, function() {
+	      var blurb = this.blurb;
+	      if (blurb != null) {
+	        var wordCount = blurb.split(' ').length; // TODO handle leading, trailing, multispace
+	        if (wordCount > 32) {
+	        	items.push('<div class="span3"><div class="item"><div class="img"><img src="http://40.media.tumblr.com/6a70ba366ee157278515ad5f20284b1d/tumblr_ml6o2uXHzL1s4mpljo1_1280.jpg"></div><div class="caption"><h4>'+
+			    		this.title+'</h4><p>'+this.blurb+'</p></div></div></div>');
+	        } else {
+	          items.push('<div class="span3"><div class="item"><div class="img"><img src="http://40.media.tumblr.com/6a70ba366ee157278515ad5f20284b1d/tumblr_ml6o2uXHzL1s4mpljo1_1280.jpg"></div><div class="caption"><h4>'+
+				    		this.title+'</h4><p>'+this.blurb+'</p></div></div></div>');
+	        }
+	      }
+
+		});
+		 
+		var d = items.join("");
+		//alert(d);
+		$('.content').append(d);
+		currentOffset = currentOffset + items.length;
+	  });
 }
 
 updateItemDisplay();
