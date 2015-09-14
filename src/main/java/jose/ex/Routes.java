@@ -12,7 +12,7 @@ import com.google.inject.Inject;
 public class Routes {
 
     @Inject
-    public Routes(ItemManager itemManager, JsonUtils jsonUtils) {
+    public Routes(ItemManager itemManager, ConvertUtils jsonUtils) {
         staticFileLocation("/public");
         exception(NumberFormatException.class, (e, req, response) ->{
             response.status(400);

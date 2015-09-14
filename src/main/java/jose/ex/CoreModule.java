@@ -8,7 +8,7 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.mongodb.MongoClient;
 
-public class MongoModule extends AbstractModule {
+public class CoreModule extends AbstractModule {
 
     @Provides
     @Singleton
@@ -22,7 +22,7 @@ public class MongoModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(JsonUtils.class);
+        bind(ConvertUtils.class);
         bind(ItemManager.class);
         bind(Routes.class).asEagerSingleton();
     }

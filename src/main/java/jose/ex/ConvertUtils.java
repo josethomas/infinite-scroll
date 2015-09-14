@@ -8,12 +8,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 
-public class JsonUtils {
+public class ConvertUtils {
 
     private ObjectMapper objectMapper;
 
     @Inject
-    public JsonUtils(ObjectMapper objectMapper) {
+    public ConvertUtils(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
