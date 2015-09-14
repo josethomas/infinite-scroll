@@ -2,7 +2,8 @@
 
 ### Prerequisites
 1. [java 8] (http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-2. [apache maven] (https://maven.apache.org/download.cgi?Preferred=ftp://mirror.reverse.net/pub/apache/)
+2. [apache maven 3.2+] (https://maven.apache.org/download.cgi?Preferred=ftp://mirror.reverse.net/pub/apache/)
+3. Installed and running [mongoDB 3.x] (https://www.mongodb.org/downloads).  Mongo db should be running on port localhost:27017 
 
 ### Steps to build and run
 1. Clone the git repo
