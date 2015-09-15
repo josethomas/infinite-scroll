@@ -11,4 +11,5 @@
 3. Run `mvn assembly:assembly`
 4. This should create a file target/exercise-1.0-SNAPSHOT-jar-with-dependencies.jar
 5. Run `java -jar target/exercise-1.0-SNAPSHOT-jar-with-dependencies.jar`
-6. This command will start a http server running on port 4567.  Point a browser to http://localhost:4567/fashions.html
+6. This command will start a http server running on port 8000.  Point a browser to http://localhost:8000/fashions.html
+7. Properties such as http port and MongoDB address are configurable in app.properties; but requires the app to be rebuild (step 3).
