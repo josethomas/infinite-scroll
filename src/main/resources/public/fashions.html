@@ -16,6 +16,7 @@
 </div>
 </div> 
 
+
 <script>
 var currentOffset = 0;
 var limit = 20;
@@ -37,6 +38,22 @@ function updateItemDisplay() {
   }
 }
 
+function nthIndexOf(str, character, n) {
+	var firstIdx = str.indexOf(character);
+	
+	if (n == 1) {
+		return firstIdx;
+	} else {
+		var afterFirstChar = str.slice(firstIdx+1);
+		var nextIdx = nthIndexOf(afterFirstChar, character, n-1);
+		if (nextIdx == -1) {
+			return -1;
+		} else {
+			return firstIdx+1+nextIdx;
+		}
+	}
+}
+
 function fetchAndUpdate() {
 	  var apiUrl = "/item?offset="+currentOffset+"&limit="+limit;
 	  console.log(apiUrl);
@@ -46,13 +63,16 @@ function fetchAndUpdate() {
 	    $.each( apiResponse, function() {
 	      var blurb = this.blurb;
 	      if (blurb != null) {
-	        var wordCount = blurb.split(' ').length; // TODO handle leading, trailing, multispace
-	        if (wordCount > 32) {
-	        	items.push('<div class="span3"><div class="item"><div class="img"><img src="http://40.media.tumblr.com/6a70ba366ee157278515ad5f20284b1d/tumblr_ml6o2uXHzL1s4mpljo1_1280.jpg"></div><div class="caption"><h4>'+
-			    		this.title+'</h4><p>'+this.blurb+'</p></div></div></div>');
+	        var nthIdx = nthIndexOf(blurb, ' ', 32);
+	        if (nthIdx > -1) {
+	        	blurb = blurb.substring(0, nthIdx) + "... <a href=\"details.html?url="+this.detailsUrl+"\" >More</a>";
+	        	items.push('<div class="span3"><div class="item"><div class="img"><img src="' +
+	        			this.thumbUrl +'"></div><div class="caption"><h4>'+
+			    		this.title+'</h4><p>'+blurb+'</p></div></div></div>');
 	        } else {
-	          items.push('<div class="span3"><div class="item"><div class="img"><img src="http://40.media.tumblr.com/6a70ba366ee157278515ad5f20284b1d/tumblr_ml6o2uXHzL1s4mpljo1_1280.jpg"></div><div class="caption"><h4>'+
-				    		this.title+'</h4><p>'+this.blurb+'</p></div></div></div>');
+	          items.push('<div class="span3"><div class="item"><div class="img"><img src="' +
+	        		  this.thumbUrl +'"></div><div class="caption"><h4>'+
+				    		this.title+'</h4><p>'+blurb+'</p></div></div></div>');
 	        }
 	      }
 
@@ -65,6 +85,11 @@ function fetchAndUpdate() {
 	  });
 }
 
+function openMyM() {
+	alert("ok");
+	$('#myModal').modal('show');
+}
+
 updateItemDisplay();
 $( window ).scroll(function() {
   if($(window).scrollTop() + $(window).height() >= $(document).height() - 300) {
@@ -72,6 +97,6 @@ $( window ).scroll(function() {
   }
 });
 </script>
- 
+
 </body>
 </html>

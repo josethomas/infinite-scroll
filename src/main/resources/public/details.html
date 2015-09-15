@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>scroll demo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body id="start">
+
+ <div id="loader"></div>
+<div id="scroll-container" class="row">
+<div id="content" class="content">
+</div>
+</div>
+
+<script>
+function getParameterByName(name) {
+	var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+	return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
+
+$(document).ready(function() {
+	var apiUrl = getParameterByName('url');
+	$.getJSON(apiUrl, function(apiResponse) {
+		var x = '<div class="span3"><div class="item"><div ><img src="' +
+		apiResponse.thumbUrl +'"></div><div class="caption"><h4>'+
+		apiResponse.title+'</h4><p>'+apiResponse.blurb+'</p></div></div></div>';
+		$('.content').append(x);
+	});
+});
+</script>
+</body>
+</html>

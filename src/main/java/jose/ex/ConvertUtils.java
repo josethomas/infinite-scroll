@@ -8,6 +8,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 
+/**
+ * Utility methods to covert data between various formats.  Primary function is to marshall and unmarshall objects <-> json.
+ * Other general purposes conversion methods go in here as well.
+ * @author jose thomas
+ *
+ */
 public class ConvertUtils {
 
     private ObjectMapper objectMapper;
@@ -17,19 +23,32 @@ public class ConvertUtils {
         this.objectMapper = objectMapper;
     }
 
+    /**
+     * Attempt to convert a json string to an object.
+     * @param payload
+     * @param clzz type of object to covert to.
+     * @return object representation of the json
+     * @throws IOException
+     */
     public <T> T unmarshall(String payload, Class<T> clzz) throws IOException {
         return objectMapper.readValue(payload, clzz);
 
     }
 
+    /**
+     * Convert an object to json string.
+     * @param obj
+     * @return
+     * @throws JsonProcessingException
+     */
     public String marshall(Object obj) throws JsonProcessingException {
         return objectMapper.writeValueAsString(obj);
     }
 
     /**
-     * 
-     * @param s
-     * @return
+     * Convert a integer represented by a string to an integer.
+     * @param s input string
+     * @return an optional integer
      * @throws NumberFormatException if the string cannot be converted to an integer.
      */
     public Optional<Integer> toPositiveInteger(String s) {

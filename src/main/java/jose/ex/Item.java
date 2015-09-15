@@ -4,6 +4,11 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
+/**
+ * Value object representing the fashion item.
+ * @author jose thomas
+ *
+ */
 @Entity("item")
 public class Item {
 
@@ -14,6 +19,7 @@ public class Item {
     private String author;
     private String thumbUrl;
     private String detailsUrl;
+    private String details;
     
     public Item() {super();}
 
@@ -52,5 +58,13 @@ public class Item {
 
     public void setDetailsUrl(String detailsUrl) {
         this.detailsUrl = detailsUrl;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 }
